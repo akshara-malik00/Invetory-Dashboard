@@ -30,12 +30,14 @@ body{
     box-sizing: border-box;
     margin-top:48px;
 }
-.sidebar li{
+.sidebar li a{
     padding:20px 20px;
     box-sizing: border-box;
     display: flex;
     align-items: center;
     cursor: pointer;
+    text-decoration: none;
+    color: inherit;
 }
 
 .icon{
@@ -46,12 +48,12 @@ body{
     flex-shrink: 0;
     color: rgb(3, 3, 116);
 }
-.sidebar li:hover{
+.sidebar li a:hover{
     background-color: rgb(224, 233, 250);
 }
-.sidebar li:active{
+.sidebar li a.active{
     background-color: rgb(106, 155, 245);
-
+    border-left: solid 4px rgb(2, 2, 108);
 }
 .sidebar .user-info{
     margin-top: auto;

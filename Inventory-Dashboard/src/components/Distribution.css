@@ -1,0 +1,46 @@
+.distribution{
+    border: solid 0.5px black; 
+    border-radius: 10px; 
+    margin-right: 10px;
+    min-width: 320px;
+    background-color: white;
+
+}
+.distribution h3{
+    padding: 10px; 
+    margin: 0px; 
+    font-weight: 600;
+    font-size: 17px;
+}
+.distcontent{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    flex: 1;
+    gap: 10px;
+    padding: 10px;
+    padding-top: 10px;
+}
+.distitem{
+    display: flex;
+    flex-direction: column;
+    padding: 4px 8px;
+    gap: 6px;
+    font-size: smaller;
+    font-weight: 500;
+}
+.distitem-row{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.distbar{
+    width: 100%;
+    height: 8px;
+    background-color: rgb(230, 230, 230);
+    border-radius: 10px;
+}
+.distbar-fill{
+    height: 100%;
+    border-radius: 10px;
+}

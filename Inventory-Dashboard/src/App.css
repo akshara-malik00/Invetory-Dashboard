@@ -24,5 +24,10 @@
     font-size: 14px;
 }
 .main-1{
-    display: flex; 
+    display: flex;
+}
+.main-2{
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
 }

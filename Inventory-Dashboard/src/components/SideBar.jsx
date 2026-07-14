@@ -1,4 +1,5 @@
 import './SideBar.css'
+import { NavLink } from "react-router";
 import { MdOutlineDashboard } from "react-icons/md";
 import { AiOutlineProduct } from "react-icons/ai";
 import { MdAdd } from "react-icons/md";
@@ -10,11 +11,11 @@ export function SideBar (){
         <div className="sidebar">
         <h1>Inventory Pro</h1>
         <ul>
-            <li>< MdOutlineDashboard className='icon' />Dashoard</li>
-            <li>< AiOutlineProduct className='icon' />Products</li>
-            <li>< MdAdd className='icon' /> Add Product</li>
-            <li><IoAnalyticsSharp className='icon' />Analytics</li>
-            <li>< IoSettingsOutline className='icon' />Settings</li>
+            <li><NavLink to="/"><MdOutlineDashboard className='icon' />Dashboard</NavLink></li>
+            <li><NavLink to="/Products"><AiOutlineProduct className='icon' />Products</NavLink></li>
+            <li><NavLink to="/Add-Product"><MdAdd className='icon' />Add Product</NavLink></li>
+            <li><NavLink to="/Analytics"><IoAnalyticsSharp className='icon' />Analytics</NavLink></li>
+            <li><NavLink to="/Settings"><IoSettingsOutline className='icon' />Settings</NavLink></li>
         </ul>
         <div className="user-info">
             <img src={userPhoto} alt="user"></img>
