@@ -1,15 +1,18 @@
 
 import './App.css'
 import { SideBar } from './components/SideBar'
+import { TopBar } from './components/TopBar'
 
 function App() {
   
 
   return (
-    <>
-    <SideBar />
-      
-    </>
+    <div className="app-layout">
+      <SideBar />
+      <div className="main-content">
+        <TopBar />
+      </div>
+    </div>
   )
 }
 
