@@ -7,6 +7,7 @@ import { BiError } from "react-icons/bi";
 import { BsExclamationDiamond } from "react-icons/bs";
 import { MdOutlineCategory } from "react-icons/md";
 import { ProductUpdates } from "./components/ProductUpdates";
+import { Alerts } from "./components/Alerts";
 
 function App() {
   return (
@@ -42,7 +43,12 @@ function App() {
             color="rgb(94, 179, 120)"
           />
         </div>
-        <ProductUpdates />
+        <div className="main-1">
+          <ProductUpdates />
+          <Alerts />
+
+        </div>
+        
       </div>
     </div>
   );
