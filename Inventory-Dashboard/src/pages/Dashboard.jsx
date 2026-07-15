@@ -6,7 +6,7 @@ import { MdOutlineCategory } from "react-icons/md";
 import { ProductUpdates } from "../components/ProductUpdates";
 import { Alerts } from "../components/Alerts";
 import { Distribution } from "../components/Distribution";
-
+import './Dashboard.css'; 
 export function Dashboard(){
     return(
         <>

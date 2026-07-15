@@ -1,0 +1,97 @@
+.searchFilters{
+    display: flex; 
+    justify-content: space-around;
+    border: solid 0.5px rgb(93, 93, 169);
+    border-radius: 10px;
+    margin-left:20px;
+    margin-right:20px;
+    background-color: white;
+    padding: 20px;
+}
+.searchprod{
+    display: flex;
+    flex-direction: column;
+    gap:5px;
+}
+.searchInputWrapper{
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.searchIcon{
+    position: absolute;
+    left: 10px;
+    color: rgb(93, 93, 169);
+    font-size: 14px;
+    pointer-events: none;
+}
+.searchprod input{
+    width: 340px;
+    height: 34px;
+    box-sizing: border-box;
+    font-size: 15px;
+    padding: 7px 7px 7px 32px;
+    border-radius: 5px;
+    border: solid 1px black;
+}
+.category{
+    display: flex;
+    flex-direction: column;
+    gap:5px;
+}
+.category select{
+    width: 200px;
+    height: 34px;
+    box-sizing: border-box;
+    font-size: 15px;
+    padding: 7px;
+    border-radius: 5px;
+    border: solid 1px black;
+}
+.stockstatus{
+    display: flex;
+    flex-direction: column;
+    gap:5px;
+}
+.stockstatus select{
+    width: 200px;
+    height: 34px;
+    box-sizing: border-box;
+    font-size: 15px;
+    padding: 7px;
+    border-radius: 5px;
+    border: solid 1px black;
+}
+.reset{
+    display: flex;
+    align-items: flex-end;
+}
+.reset button{
+    color: rgb(76, 75, 75);
+    width: 250px;
+    height: 34px;
+    box-sizing: border-box;
+    font-size: 12px;
+    padding: 7px;
+    border-radius: 5px;
+    border: solid 0.1px black;
+    background-color: white;
+}
+.searchprod p{
+    color: rgb(76, 75, 75);
+    margin: 0px; 
+    padding: 0px; 
+    font-size: 13px;
+}
+.category p{
+    color: rgb(76, 75, 75);
+    margin: 0px; 
+    padding: 0px;
+    font-size: 13px;
+}
+.stockstatus p{
+    color: rgb(76, 75, 75);
+    margin: 0px; 
+    padding: 0px;
+    font-size: 13px;
+}

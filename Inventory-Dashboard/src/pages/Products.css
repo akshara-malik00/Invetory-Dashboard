@@ -1,0 +1,12 @@
+.ProductsHeading h2{
+    margin-left: 20px;
+    color: rgb(87, 87, 91); 
+    margin-bottom: 5px;
+    font-size: 24px;
+}
+.ProductsHeading p{
+    margin-top: 0px;
+    margin-left: 20px;
+    margin-bottom: 30px;
+    font-size: 14px;
+}

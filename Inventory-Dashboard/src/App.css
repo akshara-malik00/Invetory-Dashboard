@@ -23,11 +23,3 @@
     margin-bottom: 30px;
     font-size: 14px;
 }
-.main-1{
-    display: flex;
-}
-.main-2{
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 10px;
-}
