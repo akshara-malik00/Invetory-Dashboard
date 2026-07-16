@@ -1,9 +1,11 @@
 
 .main-1{
     display: flex;
+    flex: 1;
+    min-height: 0;
 }
 .main-2{
     display: flex;
     justify-content: flex-end;
-    margin-bottom: 10px;
+    margin-bottom: 16px;
 }

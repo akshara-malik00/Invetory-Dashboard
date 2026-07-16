@@ -25,11 +25,11 @@ export function ProductUpdates (){
             <h3>Recent Product Updates</h3>
             <a href="">View All</a>
         </div>
-        
-        <UpdateItem img={mac} title="MacBook" subtitle="Stock Updated: +25 Units" time="2 mins ago"  /> 
+        <div className='updatecontent'>
+        <UpdateItem img={mac} title="MacBook" subtitle="Stock Updated: +25 Units" time="2 mins ago"  />
         <UpdateItem img={iphone} title="IPhone" subtitle="Price Modified:$245 -> $229" time="45 mins ago"  />
-        
         <UpdateItem img={ipad} title="IPad" subtitle="Status changed to SOLD OUT" time="1 hour ago" />
+        </div>
         </div>
     );
 }

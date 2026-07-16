@@ -1,10 +1,13 @@
 import './ProductTable.css';
 import { ProductRow } from './ProductRow';
-import mac from '../assets/mac.png';
-import iphone from '../assets/iphone.png';
-import ipad from '../assets/ipad.png';
 
-export function ProductTable(){
+function getStatus(quantity) {
+    if (quantity === 0) return 'Out of Stock';
+    if (quantity <= 10) return 'Low Stock';
+    return 'In Stock';
+}
+
+export function ProductTable({ products = [] }){
     return(
        <div className='productTable'>
             <div className='tableHeader'>
@@ -18,36 +21,21 @@ export function ProductTable(){
                 <div className='col colActions'>Actions</div>
             </div>
 
-            <ProductRow
-                image={mac}
-                name="MacBook Air M2"
-                sku="MBA-M2-256"
-                category="Laptops"
-                quantity={42}
-                price="999"
-                status="In Stock"
-            />
-            <ProductRow
-                image={iphone}
-                name="iPhone 15"
-                sku="IPH-15-128"
-                category="Phones"
-                quantity={5}
-                price="799"
-                status="Low Stock"
-            />
-            <ProductRow
-                image={ipad}
-                name="iPad Pro"
-                sku="IPD-PRO-256"
-                category="Tablets"
-                quantity={0}
-                price="1099"
-                status="Out of Stock"
-            />
+            {products.map((product) => (
+                <ProductRow
+                    key={product.id}
+                    image={product.thumbnail}
+                    name={product.productName}
+                    sku={product.sku}
+                    category={product.category}
+                    quantity={product.quantity}
+                    price={product.unitPrice}
+                    status={getStatus(product.quantity)}
+                />
+            ))}
 
             <div className='tablePagination'>
-                <p>Showing 1-3 of 3 products</p>
+                <p>Showing 1-{products.length} of {products.length} products</p>
                 <div className='paginationButtons'>
                     <button>Previous</button>
                     <button className='activePage'>1</button>

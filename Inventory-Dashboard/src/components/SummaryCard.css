@@ -3,6 +3,7 @@
     justify-content: space-around;
     gap: 20px;
     margin-left: 20px;
+    margin-bottom: 16px;
     flex-wrap: nowrap;
     overflow-x: auto;
 }
@@ -25,7 +26,6 @@
     width:39px;
     padding: 5px;
     border-radius: 5px;
-    color: white;
 }
 .summarycard p{
     font-size: large;

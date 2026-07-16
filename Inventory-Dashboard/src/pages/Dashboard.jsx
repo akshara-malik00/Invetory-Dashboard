@@ -17,25 +17,29 @@ export function Dashboard(){
             heading="TOTAL PRODUCTS"
             value="1,284"
             icon={<BsClipboardCheck />}
-            color="rgb(81, 135, 236)"
+            color="rgba(171, 197, 244, 1)"
+            iconColor="rgba(25, 94, 244, 1)"
           />
           <SummaryCard
             heading="LOW STOCK"
             value="42"
             icon={<BiError />}
-            color="rgb(235, 168, 53)"
+            color="rgba(246, 226, 189, 1)"
+            iconColor="rgba(238, 145, 5, 1)"
           />
           <SummaryCard
             heading="OUT OF STOCK"
             value="8"
             icon={<BsExclamationDiamond />}
-            color="rgb(220, 68, 68)"
+            color="rgba(234, 158, 158, 1)"
+            iconColor="rgb(220, 38, 38)"
           />
           <SummaryCard
             heading="CATEGORIES"
             value="24"
             icon={<MdOutlineCategory />}
-            color="rgb(94, 179, 120)"
+            color="rgba(193, 241, 208, 1)"
+            iconColor="rgba(9, 166, 66, 1)"
           />
         </div>
         <div className="main-1">

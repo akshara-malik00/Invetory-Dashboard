@@ -77,21 +77,27 @@
     border: solid 0.1px black;
     background-color: white;
 }
-.searchprod p{
+.searchprod label{
     color: rgb(76, 75, 75);
-    margin: 0px; 
-    padding: 0px; 
-    font-size: 13px;
-}
-.category p{
-    color: rgb(76, 75, 75);
-    margin: 0px; 
+    margin: 0px;
     padding: 0px;
     font-size: 13px;
 }
-.stockstatus p{
+.category label{
     color: rgb(76, 75, 75);
-    margin: 0px; 
+    margin: 0px;
     padding: 0px;
     font-size: 13px;
+}
+.stockstatus label{
+    color: rgb(76, 75, 75);
+    margin: 0px;
+    padding: 0px;
+    font-size: 13px;
+}
+.searchprod input:focus,
+.category select:focus,
+.stockstatus select:focus{
+    outline: none;
+    border-color: rgb(81, 135, 236);
 }

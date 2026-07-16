@@ -4,26 +4,32 @@ export function SearchFilters(){
     return (
         <div className='searchFilters'>
             <div className='searchprod'>
-                <p>Search Product/SKU</p>
+                <label htmlFor='searchProduct'>Search Product/SKU</label>
                 <div className='searchInputWrapper'>
                     <BsSearch className='searchIcon' />
-                    <input placeholder='e.g. Wireless Mouse'></input>
+                    <input id='searchProduct' name='searchProduct' placeholder='e.g. Wireless Mouse'></input>
                 </div>
             </div>
             <div className='category'>
-                <p>Category</p>
-                <select>
-                    <option>All Categories</option>
+                <label htmlFor='category'>Category</label>
+                <select id='category' name='category'>
+                    <option value=''>All Categories</option>
+                    <option value='laptops'>Laptops</option>
+                    <option value='phones'>Phones</option>
+                    <option value='tablets'>Tablets</option>
                 </select>
             </div>
             <div className='stockstatus'>
-                <p>Stock Status</p>
-                <select>
-                    <option>All Statuses</option>
+                <label htmlFor='stockStatus'>Stock Status</label>
+                <select id='stockStatus' name='stockStatus'>
+                    <option value=''>All Statuses</option>
+                    <option value='inStock'>In Stock</option>
+                    <option value='lowStock'>Low Stock</option>
+                    <option value='outOfStock'>Out of Stock</option>
                 </select>
             </div>
             <div className='reset'>
-                <button>Reset Filters</button>
+                <button type='button'>Reset Filters</button>
             </div>
         </div>
 

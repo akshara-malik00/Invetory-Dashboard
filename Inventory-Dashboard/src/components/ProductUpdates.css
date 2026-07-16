@@ -1,11 +1,19 @@
 .updateTable{
-    margin:30px;
+    display: flex;
+    flex-direction: column;
+    margin: 0px 30px 16px 20px;
     border: solid 0.5px black;
     border-bottom: none;
-    min-width:750px; 
+    min-width:750px;
     max-width: 750px;
     border-radius: 10px;
     overflow: hidden;
+}
+.updatecontent{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    background-color: white;
 }
 .heading{
     display: flex; 
@@ -34,6 +42,8 @@
 }
 .updateItem {
     display: flex;
+    align-items: center;
+    flex: 1;
     border-bottom:solid 0.5px black;
     background-color: white;
     padding: 6px 10px;
