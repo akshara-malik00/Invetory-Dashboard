@@ -7,6 +7,15 @@ import { ProductUpdates } from "../components/ProductUpdates";
 import { Alerts } from "../components/Alerts";
 import { Distribution } from "../components/Distribution";
 import './Dashboard.css'; 
+
+// const productNumber = 0; 
+// const lowStock =0; 
+
+// function 
+
+
+
+
 export function Dashboard(){
     return(
         <>

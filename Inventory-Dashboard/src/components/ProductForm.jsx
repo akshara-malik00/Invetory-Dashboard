@@ -10,32 +10,69 @@ const initialFormState = {
     supplier: '',
     category: '',
     description: '',
+    thumbnail:''
 };
 
-export function ProductForm({ onAddProduct }){
-    const [formData, setFormData] = useState(initialFormState);
+export function ProductForm({ onAddProduct, onUpdateProduct, initialData }){
+    const isEditing = Boolean(initialData);
+    const [formData, setFormData] = useState(
+        initialData
+            ? {
+                productName: initialData.productName,
+                quantity: initialData.quantity,
+                unitPrice: initialData.unitPrice,
+                sku: initialData.sku,
+                supplier: initialData.supplier ?? '',
+                category: initialData.category,
+                description: initialData.description ?? '',
+                thumbnail: initialData.thumbnail,
+            }
+            : initialFormState
+    );
     const navigate = useNavigate();
 
     function handleChange(e){
-        const name = e.target.name; 
-        const value = e.target.value; 
+        const name = e.target.name;
+        const value = e.target.value;
         // const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
     }
 
+    function handleFileChange(e){
+        const file = e.target.files[0];
+        if (!file) return;
+        const imageUrl = URL.createObjectURL(file);
+        setFormData((prev) => ({ ...prev, thumbnail: imageUrl }));
+    }
+
     function handleSubmit(e){
         e.preventDefault();
-        onAddProduct({
-            id: Date.now(),
-            productName: formData.productName,
-            sku: formData.sku,
-            category: formData.category,
-            quantity: Number(formData.quantity),
-            unitPrice: Number(formData.unitPrice),
-            supplier: formData.supplier,
-            description: formData.description,
-            createdAt: new Date().toISOString().slice(0, 10),
-        });
+        if (isEditing) {
+            onUpdateProduct({
+                ...initialData,
+                productName: formData.productName,
+                sku: formData.sku,
+                category: formData.category,
+                quantity: Number(formData.quantity),
+                unitPrice: Number(formData.unitPrice),
+                supplier: formData.supplier,
+                description: formData.description,
+                thumbnail: formData.thumbnail,
+            });
+        } else {
+            onAddProduct({
+                id: Date.now(),
+                productName: formData.productName,
+                sku: formData.sku,
+                category: formData.category,
+                quantity: Number(formData.quantity),
+                unitPrice: Number(formData.unitPrice),
+                supplier: formData.supplier,
+                description: formData.description,
+                thumbnail: formData.thumbnail,
+                createdAt: new Date().toISOString().slice(0, 10),
+            });
+        }
         navigate('/Products');
     }
 
@@ -45,8 +82,8 @@ export function ProductForm({ onAddProduct }){
 
     return(
         <form className='ProductForm' onSubmit={handleSubmit}>
-            <h2>Add Product</h2>
-            <p>Add a new product to your inventory system. All fields marked * are equired.</p>
+            <h2>{isEditing ? 'Edit Product' : 'Add Product'}</h2>
+            <p>{isEditing ? 'Update the details of this product.' : 'Add a new product to your inventory system.'} All fields marked * are equired.</p>
             <div className='lineone'>
                 <div className='formField'>
                     <label htmlFor='productName'>Product Name <span className='required'>*</span></label>
@@ -83,6 +120,10 @@ export function ProductForm({ onAddProduct }){
                         <option value='other'>Other</option>
                     </select>
                 </div>
+                <div className='formField thumbnail'>
+                    <label htmlFor='thumbnail'>Add Thumbnail {!isEditing && <span className='required'>*</span>}</label>
+                    <input id='thumbnail' name='thumbnail' type='file' accept='image/*' onChange={handleFileChange} required={!isEditing} />
+                </div>
             </div>
             <div className='linefour'>
                 <div className='formField'>
@@ -92,7 +133,7 @@ export function ProductForm({ onAddProduct }){
             </div>
             <div className='buttons'>
                 <button type='button' className='cancelBtn' onClick={handleCancel}>Cancel</button>
-                <button type='submit' className='saveBtn'>Save Product</button>
+                <button type='submit' className='saveBtn'>{isEditing ? 'Save Changes' : 'Save Product'}</button>
             </div>
         </form>
     );
