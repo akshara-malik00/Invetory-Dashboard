@@ -7,7 +7,15 @@ function getStatus(quantity) {
     return 'In Stock';
 }
 
-export function ProductTable({ products = [] }){
+export function ProductTable({ products = [], searchQuery = '' }){
+    const query = searchQuery.trim().toLowerCase();
+    const filteredProducts = products.filter((product) => {
+        if (!query) return true; //will return all if there is no query (hence all the data) 
+        return (
+            product.productName?.toLowerCase().includes(query) || 
+            product.sku?.toLowerCase().includes(query)
+        );
+    });
     return(
        <div className='productTable'>
             <div className='tableHeader'>
@@ -21,7 +29,7 @@ export function ProductTable({ products = [] }){
                 <div className='col colActions'>Actions</div>
             </div>
 
-            {products.map((product) => (
+            {filteredProducts.map((product) => (
                 <ProductRow
                     key={product.id}
                     image={product.thumbnail}
@@ -35,7 +43,7 @@ export function ProductTable({ products = [] }){
             ))}
 
             <div className='tablePagination'>
-                <p>Showing 1-{products.length} of {products.length} products</p>
+                <p>Showing 1-{filteredProducts.length} of {filteredProducts.length} products</p>
                 <div className='paginationButtons'>
                     <button>Previous</button>
                     <button className='activePage'>1</button>

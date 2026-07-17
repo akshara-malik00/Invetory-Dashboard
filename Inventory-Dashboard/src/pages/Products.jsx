@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import { SearchFilters } from '../components/SearchFilters';
 import { ProductTable } from '../components/ProductTable';
 import './Products.css'; 
 export function Products({ products }) {
+    const [searchQuery, setSearchQuery] = useState(""); 
   return (
     <>
       <div>
@@ -11,8 +13,8 @@ export function Products({ products }) {
             Manage your global inventory and stock values across all categories.
           </p>
         </div>
-        < SearchFilters />
-        < ProductTable products={products} />
+        < SearchFilters searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>
+        < ProductTable products={products} searchQuery={searchQuery} />
       </div>
     </>
   );
