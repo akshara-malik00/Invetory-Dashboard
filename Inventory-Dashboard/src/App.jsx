@@ -4,11 +4,12 @@ import { SideBar } from "./components/SideBar";
 import { TopBar } from "./components/TopBar";
 import { Routes, Route } from "react-router";
 import { Dashboard } from "./pages/Dashboard";
-import { Products } from "./pages/Products";
+
 import { AddProduct } from "./pages/AddProduct";
 import { Analytics } from "./pages/Analytics";
 import { Settings } from "./pages/Settings";
 import { ProductData } from './data/productData.js';
+import { Products } from "./pages/Products";
 function App() {
   const [products, setProducts] = useState(ProductData);
 
@@ -33,3 +34,4 @@ function App() {
   );
 }
 export default App;
+ 

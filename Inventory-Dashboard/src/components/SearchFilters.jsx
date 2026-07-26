@@ -2,8 +2,21 @@
 import "./SearchFilters.css";
 import { BsSearch } from "react-icons/bs";
 
-export function SearchFilters({searchQuery, setSearchQuery }) {
-  
+export function SearchFilters({
+  searchQuery,
+  setSearchQuery,
+  category,
+  setCategory,
+  stockStatus,
+  setStockStatus,
+}) {
+  // Clears every filter back to its empty/default value.
+  function handleReset() {
+    setSearchQuery("");
+    setCategory("");
+    setStockStatus("");
+  }
+
   return (
     <div className="searchFilters">
       <div className="searchprod">
@@ -21,21 +34,31 @@ export function SearchFilters({searchQuery, setSearchQuery }) {
       </div>
       <div className="category">
         <label htmlFor="category">Category</label>
-        <select id="category" name="category">
+        <select
+          id="category"
+          name="category"
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+        >
           <option value="">All Categories</option>
-          <option value="laptops">Laptops</option>
-          <option value="phones">Phones</option>
-          <option value="tablets">Tablets</option>
+          <option value="Laptops">Laptops</option>
+          <option value="Phones">Phones</option>
+          <option value="Tablets">Tablets</option>
           <option value="Audio">Audio</option>
-          <option value="Accesories">Accesories</option>
-          <option value="Entertainment">Enterntainment</option>
+          <option value="Accessories">Accessories</option>
+          <option value="Entertainment">Entertainment</option>
           <option value="Wearables">Wearables</option>
           <option value="Smart Home">Smart Home</option>
         </select>
       </div>
       <div className="stockstatus">
         <label htmlFor="stockStatus">Stock Status</label>
-        <select id="stockStatus" name="stockStatus">
+        <select
+          id="stockStatus"
+          name="stockStatus"
+          value={stockStatus}
+          onChange={(e) => setStockStatus(e.target.value)}
+        >
           <option value="">All Statuses</option>
           <option value="inStock">In Stock</option>
           <option value="lowStock">Low Stock</option>
@@ -43,7 +66,7 @@ export function SearchFilters({searchQuery, setSearchQuery }) {
         </select>
       </div>
       <div className="reset">
-        <button type="button">Reset Filters</button>
+        <button type="button" onClick={handleReset}>Reset Filters</button>
       </div>
     </div>
   );

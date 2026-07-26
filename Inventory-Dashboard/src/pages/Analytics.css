@@ -1,3 +1,7 @@
+.Analytics{
+    display: flex; 
+    flex-direction: column;
+}
 .Analytics h2{
     margin-left: 20px;
     color: rgb(87, 87, 91); 
@@ -10,3 +14,33 @@
     margin-bottom: 30px;
     font-size: 14px;
 }
+.mainone{
+    display: flex; 
+    flex: 1; 
+    justify-content: space-around;
+}
+.maintwo{
+    display: flex; 
+    flex: 1; 
+    justify-content: space-around;
+}
+.linegraph{
+    border: solid 0.5px black; 
+    width: 650px; 
+    height: 350px; 
+    border-radius: 10px;
+}
+.piegraph{
+    border: solid 0.5px black; 
+    width: 400px; 
+    height: 350px;
+    border-radius: 10px;
+} 
+.barGraph{
+    border: solid 0.5px black;
+    border-radius: 10px;
+    width: 900px; 
+    height: 300px;
+    border-radius: 10px;
+    margin-top: 20px; 
+}        
