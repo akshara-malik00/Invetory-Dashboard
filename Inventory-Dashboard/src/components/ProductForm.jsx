@@ -91,11 +91,11 @@ export function ProductForm({ onAddProduct, onUpdateProduct, initialData }){
                 </div>
                 <div className='formField'>
                     <label htmlFor='quantity'>Quantity <span className='required'>*</span></label>
-                    <input type='number' id='quantity' name='quantity' placeholder='0' value={formData.quantity} onChange={handleChange} required />
+                    <input type='number' id='quantity' name='quantity' placeholder='0' min='0' step='1' value={formData.quantity} onChange={handleChange} required />
                 </div>
                 <div className='formField'>
                     <label htmlFor='unitPrice'>Unit Price ($) <span className='required'>*</span></label>
-                    <input type='number' id='unitPrice' name='unitPrice' placeholder='0.00' value={formData.unitPrice} onChange={handleChange} required />
+                    <input type='number' id='unitPrice' name='unitPrice' placeholder='0.00' min='0' step='0.01' value={formData.unitPrice} onChange={handleChange} required />
                 </div>
             </div>
             <div className='linetwo'>

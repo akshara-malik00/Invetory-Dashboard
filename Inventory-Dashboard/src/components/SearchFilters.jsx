@@ -4,7 +4,7 @@ import { BsSearch } from "react-icons/bs";
 
 export function SearchFilters({
   searchQuery,
-  setSearchQuery,
+  setSearchQuery, 
   category,
   setCategory,
   stockStatus,

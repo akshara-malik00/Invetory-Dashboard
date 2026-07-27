@@ -1,0 +1,86 @@
+.globalSearchDropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.06);
+    max-height: 340px;
+    overflow-y: auto;
+    z-index: 50;
+    padding: 6px;
+    opacity: 1;
+    animation: globalSearchFadeIn 0.15s ease-out;
+}
+
+@keyframes globalSearchFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.globalSearchResult {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 10px 12px;
+    background: none;
+    border: none;
+    border-radius: 8px;
+    text-align: left;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.globalSearchResult:hover {
+    background-color: rgb(245, 249, 252);
+}
+
+.globalSearchThumbnail {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+    border-radius: 6px;
+    flex-shrink: 0;
+    background: rgb(245, 249, 252);
+}
+
+.globalSearchDetails {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.globalSearchName {
+    font-size: 14px;
+    font-weight: 600;
+    color: rgb(30, 30, 30);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.globalSearchCategory {
+    font-size: 12px;
+    color: rgb(106, 155, 245);
+}
+
+.globalSearchSku {
+    font-size: 12px;
+    color: rgb(130, 130, 130);
+}
+
+.globalSearchEmpty {
+    padding: 16px;
+    text-align: center;
+    font-size: 14px;
+    color: rgb(130, 130, 130);
+}

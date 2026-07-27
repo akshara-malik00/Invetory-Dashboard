@@ -1,6 +1,6 @@
 import './ProductRow.css';
 
-export function ProductRow({ image, name, sku, category, quantity, price, status }) {
+export function ProductRow({ image, name, sku, category, quantity, price, status, onEdit, onDelete }) {
   const statusClass =
     status === 'In Stock' ? 'statusInStock' :
     status === 'Low Stock' ? 'statusLowStock' : 'statusOutOfStock';
@@ -19,8 +19,8 @@ export function ProductRow({ image, name, sku, category, quantity, price, status
         <span className={`statusBadge ${statusClass}`}>{status}</span>
       </div>
       <div className='col colActions'>
-        <button className='actionBtn'>Edit</button>
-        <button className='actionBtn'>Delete</button>
+        <button className='actionBtn' onClick={onEdit}>Edit</button>
+        <button className='actionBtn' onClick={onDelete}>Delete</button>
       </div>
     </div>
   );

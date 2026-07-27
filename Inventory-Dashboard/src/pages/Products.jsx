@@ -1,11 +1,24 @@
 import { useState } from 'react';
+import { useSearchParams } from 'react-router';
 import { SearchFilters } from '../components/SearchFilters';
 import { ProductTable } from '../components/ProductTable';
-import './Products.css'; 
-export function Products({ products }) {
-    const [searchQuery, setSearchQuery] = useState("");
+import './Products.css';
+export function Products({ products, onDeleteProduct }) {
+    const [searchParams] = useSearchParams();
+    const urlSearchQuery = searchParams.get('search') || '';
+
+    const [searchQuery, setSearchQuery] = useState(urlSearchQuery);
     const [category, setCategory] = useState("");
     const [stockStatus, setStockStatus] = useState("");
+
+    // Picks up a query the TopBar global search sent via ?search=, even if
+    // we're already sitting on the Products page. Adjusting state during
+    // render (rather than in an effect) avoids an extra render pass.
+    const [appliedUrlQuery, setAppliedUrlQuery] = useState(urlSearchQuery);
+    if (urlSearchQuery && urlSearchQuery !== appliedUrlQuery) {
+        setAppliedUrlQuery(urlSearchQuery);
+        setSearchQuery(urlSearchQuery);
+    }
   return (
     <>
       <div>
@@ -28,6 +41,7 @@ export function Products({ products }) {
           searchQuery={searchQuery}
           category={category}
           stockStatus={stockStatus}
+          onDeleteProduct={onDeleteProduct}
         />
       </div>
     </>
