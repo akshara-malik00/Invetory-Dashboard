@@ -14,7 +14,7 @@ export function ProductRow({ image, name, sku, category, quantity, price, status
       <div className='col colSku'>{sku}</div>
       <div className='col colCategory'>{category}</div>
       <div className='col colQuantity'>{quantity}</div>
-      <div className='col colPrice'>${price}</div>
+      <div className='col colPrice'>₹{price}</div>
       <div className='col colStatus'>
         <span className={`statusBadge ${statusClass}`}>{status}</span>
       </div>

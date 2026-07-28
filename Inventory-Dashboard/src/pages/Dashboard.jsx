@@ -6,12 +6,13 @@ import { MdOutlineCategory } from "react-icons/md";
 import { ProductUpdates } from "../components/ProductUpdates";
 import { Alerts } from "../components/Alerts";
 import { Distribution } from "../components/Distribution";
+import { DEFAULT_LOW_STOCK_THRESHOLD, getStatusKey } from "../utils/inventoryStatus";
 import './Dashboard.css';
 
-export function Dashboard({ products = [] }){
+export function Dashboard({ products = [], lowStockThreshold = DEFAULT_LOW_STOCK_THRESHOLD }){
     const totalProducts = products.length;
-    const lowStockCount = products.filter((product) => product.quantity > 0 && product.quantity <= 10).length;
-    const outOfStockCount = products.filter((product) => product.quantity === 0).length;
+    const lowStockCount = products.filter((product) => getStatusKey(product.quantity, lowStockThreshold) === 'lowStock').length;
+    const outOfStockCount = products.filter((product) => getStatusKey(product.quantity, lowStockThreshold) === 'outOfStock').length;
     const categoryCount = new Set(products.map((product) => product.category).filter(Boolean)).size;
 
     return(

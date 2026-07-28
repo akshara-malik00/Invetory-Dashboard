@@ -7,7 +7,7 @@ export function AddProduct({ products, onAddProduct, onUpdateProduct }) {
 
   return (
     <>
-      <ProductForm onAddProduct={onAddProduct} onUpdateProduct={onUpdateProduct} initialData={initialData} />
+      <ProductForm onAddProduct={onAddProduct} onUpdateProduct={onUpdateProduct} initialData={initialData} products={products} />
     </>
   );
 }

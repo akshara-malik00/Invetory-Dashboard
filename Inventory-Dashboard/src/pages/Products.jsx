@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router';
 import { SearchFilters } from '../components/SearchFilters';
 import { ProductTable } from '../components/ProductTable';
 import './Products.css';
-export function Products({ products, onDeleteProduct }) {
+export function Products({ products, onDeleteProduct, lowStockThreshold }) {
     const [searchParams] = useSearchParams();
     const urlSearchQuery = searchParams.get('search') || '';
 
@@ -42,6 +42,7 @@ export function Products({ products, onDeleteProduct }) {
           category={category}
           stockStatus={stockStatus}
           onDeleteProduct={onDeleteProduct}
+          lowStockThreshold={lowStockThreshold}
         />
       </div>
     </>

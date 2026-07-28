@@ -3,26 +3,12 @@ import { useNavigate } from 'react-router';
 import './ProductTable.css';
 import { ProductRow } from './ProductRow';
 import { matchesProductSearch } from '../utils/productSearch';
+import { DEFAULT_LOW_STOCK_THRESHOLD, STATUS_LABELS, getStatusKey } from '../utils/inventoryStatus';
 
 // How many product rows to show on each page.
 const ROWS_PER_PAGE = 3;
 
-// Turns a quantity into one of the same 3 keys used by the Stock Status dropdown,
-// so we can compare "what the user picked" with "what the product actually is".
-function getStatusKey(quantity) {
-    if (quantity === 0) return 'outOfStock';
-    if (quantity <= 10) return 'lowStock';
-    return 'inStock';
-}
-
-// Human-readable label shown in the table, looked up from the key above.
-const STATUS_LABELS = {
-    outOfStock: 'Out of Stock',
-    lowStock: 'Low Stock',
-    inStock: 'In Stock',
-};
-
-export function ProductTable({ products = [], searchQuery = '', category = '', stockStatus = '', onDeleteProduct }){
+export function ProductTable({ products = [], searchQuery = '', category = '', stockStatus = '', onDeleteProduct, lowStockThreshold = DEFAULT_LOW_STOCK_THRESHOLD }){
     const [currentPage, setCurrentPage] = useState(1);
     const navigate = useNavigate();
 
@@ -35,7 +21,7 @@ export function ProductTable({ products = [], searchQuery = '', category = '', s
             !category || product.category?.toLowerCase() === category.toLowerCase();
 
         const matchesStock =
-            !stockStatus || getStatusKey(product.quantity) === stockStatus;
+            !stockStatus || getStatusKey(product.quantity, lowStockThreshold) === stockStatus;
 
         // A product only shows up if it passes ALL active filters.
         return matchesSearch && matchesCategory && matchesStock;
@@ -76,7 +62,7 @@ export function ProductTable({ products = [], searchQuery = '', category = '', s
                     category={product.category}
                     quantity={product.quantity}
                     price={product.unitPrice}
-                    status={STATUS_LABELS[getStatusKey(product.quantity)]}
+                    status={STATUS_LABELS[getStatusKey(product.quantity, lowStockThreshold)]}
                     onEdit={() => navigate(`/Edit-Product/${product.id}`)}
                     onDelete={() => {
                         if (window.confirm(`Delete "${product.productName}"?`)) {
