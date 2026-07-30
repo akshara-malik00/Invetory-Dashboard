@@ -10,20 +10,34 @@ import {
   getMonthLabel,
 } from "../utils/analyticsData";
 
-// Fixed hue per category (validated categorical palette, adjacent-pair safe)
-// so a category keeps the same color as products are added/removed, and
-// matches the category list used in ProductForm/SearchFilters.
-const CATEGORY_COLORS = {
-  Tablets: "#2a78d6",
-  Phones: "#eb6834",
-  Laptops: "#1baf7a",
-  Audio: "#eda100",
-  Accessories: "#e87ba4",
-  Entertainment: "#008300",
-  Wearables: "#4a3aa7",
-  "Smart Home": "#e34948",
-};
-const FALLBACK_CATEGORY_COLOR = "#898781";
+// Validated categorical palette (fixed hue order, adjacent-pair CVD-safe).
+// Categories now come from the API rather than a known fixed set, so slots
+// are assigned by rank (largest category first) instead of by name.
+const CATEGORY_PALETTE = [
+  "#2a78d6", // blue
+  "#eb6834", // orange
+  "#1baf7a", // aqua
+  "#eda100", // yellow
+  "#e87ba4", // magenta
+  "#008300", // green
+  "#4a3aa7", // violet
+];
+// Reserved for the "Other" bucket, never used for a real category, so an
+// aggregated slice never impersonates a real one.
+const OTHER_CATEGORY_COLOR = "#898781";
+const OTHER_CATEGORY_LABEL = "Other";
+
+// DummyJSON's real category list can run well past what a pie chart (or the
+// palette) can carry legibly. Keep the largest categories as their own
+// slices and fold the rest into a single "Other" slice.
+function foldIntoTopCategories(categoryTotals, maxSlices = CATEGORY_PALETTE.length) {
+  if (categoryTotals.length <= maxSlices) return categoryTotals;
+
+  const topCategories = categoryTotals.slice(0, maxSlices - 1);
+  const remainingCategories = categoryTotals.slice(maxSlices - 1);
+  const otherTotal = remainingCategories.reduce((sum, [, quantity]) => sum + quantity, 0);
+  return [...topCategories, [OTHER_CATEGORY_LABEL, otherTotal]];
+}
 
 const lineOptions = {
   responsive: true,
@@ -93,14 +107,14 @@ export function Analytics({ products = [] }) {
     );
   }
 
-  const categoryTotals = buildStockByCategory(products);
+  const categoryTotals = foldIntoTopCategories(buildStockByCategory(products));
   const stockByCategory = {
     labels: categoryTotals.map(([category]) => category),
     datasets: [
       {
         data: categoryTotals.map(([, quantity]) => quantity),
-        backgroundColor: categoryTotals.map(
-          ([category]) => CATEGORY_COLORS[category] || FALLBACK_CATEGORY_COLOR
+        backgroundColor: categoryTotals.map(([category], index) =>
+          category === OTHER_CATEGORY_LABEL ? OTHER_CATEGORY_COLOR : CATEGORY_PALETTE[index]
         ),
         borderColor: "#ffffff",
         borderWidth: 2,

@@ -66,3 +66,13 @@
     border: none;
     border-top: solid 0.5px black;
 }
+
+@media (max-width: 640px) {
+    .search-wrapper {
+        margin: 8px 12px;
+    }
+    .topbar-icons {
+        gap: 12px;
+        margin-right: 12px;
+    }
+}

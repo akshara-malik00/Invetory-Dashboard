@@ -71,7 +71,32 @@ body{
     cursor: pointer;
 }
 .user-info img{
-    height: 45px; 
+    height: 45px;
     border-radius: 20px;
+}
+
+@media (max-width: 768px) {
+    .sidebar{
+        width: 100%;
+        min-height: auto;
+        border-right: none;
+        border-bottom: solid 0.5px black;
+    }
+    .sidebar h1{
+        padding-top: 14px;
+        margin-bottom: 4px;
+    }
+    .sidebar ul{
+        margin-top: 8px;
+        display: flex;
+        overflow-x: auto;
+    }
+    .sidebar li a{
+        padding: 12px 16px;
+        white-space: nowrap;
+    }
+    .sidebar .user-info{
+        display: none;
+    }
 }
 

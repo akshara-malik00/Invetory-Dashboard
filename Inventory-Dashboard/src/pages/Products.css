@@ -10,3 +10,22 @@
     margin-bottom: 30px;
     font-size: 14px;
 }
+.productsStatusMessage{
+    margin: 20px 40px;
+    padding: 24px;
+    text-align: center;
+    color: rgb(87, 87, 91);
+    background-color: #fcfcfb;
+    border: 1px solid #e1e0d9;
+    border-radius: 8px;
+}
+.productsStatusError{
+    color: #d03b3b;
+    border-color: #f0c6c6;
+    background-color: #fdf3f3;
+}
+@media (max-width: 640px) {
+    .productsStatusMessage{
+        margin: 20px 16px;
+    }
+}

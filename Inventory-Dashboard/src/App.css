@@ -24,3 +24,9 @@
     margin-bottom: 16px;
     font-size: 14px;
 }
+
+@media (max-width: 768px) {
+    .app-layout {
+        flex-direction: column;
+    }
+}

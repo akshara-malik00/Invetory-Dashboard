@@ -1,15 +1,24 @@
-// import { useState } from "react";
+import { useMemo } from "react";
 import "./SearchFilters.css";
 import { BsSearch } from "react-icons/bs";
 
 export function SearchFilters({
+  products = [],
   searchQuery,
-  setSearchQuery, 
+  setSearchQuery,
   category,
   setCategory,
   stockStatus,
   setStockStatus,
 }) {
+  // Derived from whatever products actually came back from the API, rather
+  // than a fixed list, so the dropdown never offers a category with zero
+  // matches (or hides one the data actually has).
+  const categoryOptions = useMemo(() => {
+    const uniqueCategories = new Set(products.map((product) => product.category).filter(Boolean));
+    return [...uniqueCategories].sort();
+  }, [products]);
+
   // Clears every filter back to its empty/default value.
   function handleReset() {
     setSearchQuery("");
@@ -41,14 +50,9 @@ export function SearchFilters({
           onChange={(e) => setCategory(e.target.value)}
         >
           <option value="">All Categories</option>
-          <option value="Laptops">Laptops</option>
-          <option value="Phones">Phones</option>
-          <option value="Tablets">Tablets</option>
-          <option value="Audio">Audio</option>
-          <option value="Accessories">Accessories</option>
-          <option value="Entertainment">Entertainment</option>
-          <option value="Wearables">Wearables</option>
-          <option value="Smart Home">Smart Home</option>
+          {categoryOptions.map((option) => (
+            <option key={option} value={option}>{option}</option>
+          ))}
         </select>
       </div>
       <div className="stockstatus">

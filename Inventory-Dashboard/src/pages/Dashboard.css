@@ -2,6 +2,7 @@
 .main-1{
     display: flex;
     flex: 1;
+    flex-wrap: wrap;
     min-height: 0;
 }
 .main-2{

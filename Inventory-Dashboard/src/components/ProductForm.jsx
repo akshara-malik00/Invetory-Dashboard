@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router';
 import './ProductForm.css';
 
@@ -12,19 +12,6 @@ const initialFormState = {
     description: '',
     thumbnail:''
 };
-
-// Matches the category values used across the app (SearchFilters, product data)
-// so a product added here can actually be found by the category filter.
-const CATEGORY_OPTIONS = [
-    'Tablets',
-    'Phones',
-    'Laptops',
-    'Audio',
-    'Accessories',
-    'Entertainment',
-    'Wearables',
-    'Smart Home',
-];
 
 const SKU_PATTERN = /^[A-Za-z0-9-]+$/;
 
@@ -96,7 +83,19 @@ export function ProductForm({ onAddProduct, onUpdateProduct, initialData, produc
             : initialFormState
     );
     const [errors, setErrors] = useState({});
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitError, setSubmitError] = useState('');
     const navigate = useNavigate();
+
+    // Derived from the products already loaded from the API, rather than a
+    // fixed list, so this form always offers the categories that actually
+    // exist in the inventory (plus the current product's own category, in
+    // case it's being edited before that category's other products load).
+    const categoryOptions = useMemo(() => {
+        const uniqueCategories = new Set(products.map((product) => product.category).filter(Boolean));
+        if (initialData?.category) uniqueCategories.add(initialData.category);
+        return [...uniqueCategories].sort();
+    }, [products, initialData]);
 
     function handleChange(e){
         const name = e.target.name;
@@ -116,7 +115,7 @@ export function ProductForm({ onAddProduct, onUpdateProduct, initialData, produc
         setErrors((prev) => (prev.thumbnail ? { ...prev, thumbnail: undefined } : prev));
     }
 
-    function handleSubmit(e){
+    async function handleSubmit(e){
         e.preventDefault();
 
         const validationErrors = validate(formData, {
@@ -128,33 +127,42 @@ export function ProductForm({ onAddProduct, onUpdateProduct, initialData, produc
             return;
         }
 
-        if (isEditing) {
-            onUpdateProduct({
-                ...initialData,
-                productName: formData.productName,
-                sku: formData.sku,
-                category: formData.category,
-                quantity: Number(formData.quantity),
-                unitPrice: Number(formData.unitPrice),
-                supplier: formData.supplier,
-                description: formData.description,
-                thumbnail: formData.thumbnail,
-            });
-        } else {
-            onAddProduct({
-                id: Date.now(),
-                productName: formData.productName,
-                sku: formData.sku,
-                category: formData.category,
-                quantity: Number(formData.quantity),
-                unitPrice: Number(formData.unitPrice),
-                supplier: formData.supplier,
-                description: formData.description,
-                thumbnail: formData.thumbnail,
-                createdAt: new Date().toISOString().slice(0, 10),
-            });
+        setSubmitError('');
+        setIsSubmitting(true);
+        try {
+            if (isEditing) {
+                await onUpdateProduct({
+                    ...initialData,
+                    productName: formData.productName,
+                    sku: formData.sku,
+                    category: formData.category,
+                    quantity: Number(formData.quantity),
+                    unitPrice: Number(formData.unitPrice),
+                    supplier: formData.supplier,
+                    description: formData.description,
+                    thumbnail: formData.thumbnail,
+                });
+            } else {
+                await onAddProduct({
+                    id: Date.now(),
+                    productName: formData.productName,
+                    sku: formData.sku,
+                    category: formData.category,
+                    quantity: Number(formData.quantity),
+                    unitPrice: Number(formData.unitPrice),
+                    supplier: formData.supplier,
+                    description: formData.description,
+                    thumbnail: formData.thumbnail,
+                    createdAt: new Date().toISOString().slice(0, 10),
+                });
+            }
+            navigate('/Products');
+        } catch (error) {
+            console.error('Failed to save product:', error);
+            setSubmitError('Something went wrong while saving this product. Please try again.');
+        } finally {
+            setIsSubmitting(false);
         }
-        navigate('/Products');
     }
 
     function handleCancel(){
@@ -199,7 +207,7 @@ export function ProductForm({ onAddProduct, onUpdateProduct, initialData, produc
                     <label htmlFor='category'>Category <span className='required'>*</span></label>
                     <select id='category' name='category' value={formData.category} onChange={handleChange} className={errors.category ? 'inputError' : ''} aria-invalid={Boolean(errors.category)}>
                         <option value=''>Select category</option>
-                        {CATEGORY_OPTIONS.map((option) => (
+                        {categoryOptions.map((option) => (
                             <option key={option} value={option}>{option}</option>
                         ))}
                     </select>
@@ -217,9 +225,12 @@ export function ProductForm({ onAddProduct, onUpdateProduct, initialData, produc
                     <textarea id='description' name='description' placeholder='Enter product description' rows='6' value={formData.description} onChange={handleChange}></textarea>
                 </div>
             </div>
+            {submitError && <p className='errorText formSubmitError'>{submitError}</p>}
             <div className='buttons'>
-                <button type='button' className='cancelBtn' onClick={handleCancel}>Cancel</button>
-                <button type='submit' className='saveBtn'>{isEditing ? 'Save Changes' : 'Save Product'}</button>
+                <button type='button' className='cancelBtn' onClick={handleCancel} disabled={isSubmitting}>Cancel</button>
+                <button type='submit' className='saveBtn' disabled={isSubmitting}>
+                    {isSubmitting ? 'Saving…' : isEditing ? 'Save Changes' : 'Save Product'}
+                </button>
             </div>
         </form>
     );

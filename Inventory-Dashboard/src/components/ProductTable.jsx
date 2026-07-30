@@ -6,7 +6,36 @@ import { matchesProductSearch } from '../utils/productSearch';
 import { DEFAULT_LOW_STOCK_THRESHOLD, STATUS_LABELS, getStatusKey } from '../utils/inventoryStatus';
 
 // How many product rows to show on each page.
-const ROWS_PER_PAGE = 3;
+const ROWS_PER_PAGE = 4;
+
+// How many page numbers to show on each side of the current page before
+// collapsing the rest into a "…". First and last page are always shown.
+const PAGE_NEIGHBORS = 1;
+
+// Builds a compact page list like [1, '…', 4, 5, 6, '…', 34] instead of
+// rendering every page number, which stops the pagination bar from
+// overflowing once there are more than a handful of pages.
+function buildPageList(current, total) {
+    const pages = [];
+    for (let pageNumber = 1; pageNumber <= total; pageNumber++) {
+        const isEdge = pageNumber === 1 || pageNumber === total;
+        const isNearCurrent = Math.abs(pageNumber - current) <= PAGE_NEIGHBORS;
+        if (isEdge || isNearCurrent) {
+            pages.push(pageNumber);
+        }
+    }
+
+    const pagesWithEllipses = [];
+    let previousPage = 0;
+    for (const pageNumber of pages) {
+        if (previousPage && pageNumber - previousPage > 1) {
+            pagesWithEllipses.push('…');
+        }
+        pagesWithEllipses.push(pageNumber);
+        previousPage = pageNumber;
+    }
+    return pagesWithEllipses;
+}
 
 export function ProductTable({ products = [], searchQuery = '', category = '', stockStatus = '', onDeleteProduct, lowStockThreshold = DEFAULT_LOW_STOCK_THRESHOLD }){
     const [currentPage, setCurrentPage] = useState(1);
@@ -42,35 +71,37 @@ export function ProductTable({ products = [], searchQuery = '', category = '', s
 
     return(
        <div className='productTable'>
-            <div className='tableHeader'>
-                <div className='col colThumbnail'>Thumbnail</div>
-                <div className='col colName'>Product Name</div>
-                <div className='col colSku'>SKU</div>
-                <div className='col colCategory'>Category</div>
-                <div className='col colQuantity'>Quantity</div>
-                <div className='col colPrice'>Unit Price</div>
-                <div className='col colStatus'>Status</div>
-                <div className='col colActions'>Actions</div>
-            </div>
+            <div className='productTableScroll'>
+                <div className='tableHeader'>
+                    <div className='col colThumbnail'>Thumbnail</div>
+                    <div className='col colName'>Product Name</div>
+                    <div className='col colSku'>SKU</div>
+                    <div className='col colCategory'>Category</div>
+                    <div className='col colQuantity'>Quantity</div>
+                    <div className='col colPrice'>Unit Price</div>
+                    <div className='col colStatus'>Status</div>
+                    <div className='col colActions'>Actions</div>
+                </div>
 
-            {productsOnPage.map((product) => (
-                <ProductRow
-                    key={product.id}
-                    image={product.thumbnail}
-                    name={product.productName}
-                    sku={product.sku}
-                    category={product.category}
-                    quantity={product.quantity}
-                    price={product.unitPrice}
-                    status={STATUS_LABELS[getStatusKey(product.quantity, lowStockThreshold)]}
-                    onEdit={() => navigate(`/Edit-Product/${product.id}`)}
-                    onDelete={() => {
-                        if (window.confirm(`Delete "${product.productName}"?`)) {
-                            onDeleteProduct(product.id);
-                        }
-                    }}
-                />
-            ))}
+                {productsOnPage.map((product) => (
+                    <ProductRow
+                        key={product.id}
+                        image={product.thumbnail}
+                        name={product.productName}
+                        sku={product.sku}
+                        category={product.category}
+                        quantity={product.quantity}
+                        price={product.unitPrice}
+                        status={STATUS_LABELS[getStatusKey(product.quantity, lowStockThreshold)]}
+                        onEdit={() => navigate(`/Edit-Product/${product.id}`)}
+                        onDelete={() => {
+                            if (window.confirm(`Delete "${product.productName}"?`)) {
+                                onDeleteProduct(product.id);
+                            }
+                        }}
+                    />
+                ))}
+            </div>
 
             <div className='tablePagination'>
                 <p>
@@ -82,15 +113,19 @@ export function ProductTable({ products = [], searchQuery = '', category = '', s
                         Previous
                     </button>
 
-                    {Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNumber) => (
-                        <button
-                            key={pageNumber}
-                            className={pageNumber === page ? 'activePage' : ''}
-                            onClick={() => goToPage(pageNumber)}
-                        >
-                            {pageNumber}
-                        </button>
-                    ))}
+                    {buildPageList(page, totalPages).map((pageNumber, index) =>
+                        pageNumber === '…' ? (
+                            <span key={`ellipsis-${index}`} className='paginationEllipsis'>…</span>
+                        ) : (
+                            <button
+                                key={pageNumber}
+                                className={pageNumber === page ? 'activePage' : ''}
+                                onClick={() => goToPage(pageNumber)}
+                            >
+                                {pageNumber}
+                            </button>
+                        )
+                    )}
 
                     <button onClick={() => goToPage(page + 1)} disabled={page === totalPages}>
                         Next
